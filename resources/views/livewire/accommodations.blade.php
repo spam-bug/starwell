@@ -1,0 +1,78 @@
+<div class="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="bg-white rounded border border-gray-300 p-4 flex flex-col lg:flex-row gap-2">
+        <x-form.input type="text" wire:model.live="searchTerm" placeholder="Search accommodations" />
+
+        <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex items-center justify-between gap-2">
+                <x-form.label for="type" class="whitespace-nowrap">Service Type</x-form.label>
+                <x-form.select wire:model.live="type" class="min-w-[200px]">
+                    <option value="">All</option>
+                    @foreach(\App\Enums\AccommodationType::cases() as $case)
+                        <option value="{{ $case->value }}">{{ $case->name }}</option>
+                    @endforeach
+                </x-form.select>
+            </div>
+
+            <div class="flex items-center justify-between gap-2">
+                <x-form.label for="max-person" class="whitespace-nowrap">Max Person</x-form.label>
+                <x-form.select class="min-w-[100px]" id="max-person" wire:model.live="maxPerson">
+                    <option value="0">All</option>
+                    @if(! empty($maxPersonChoices))
+                        @foreach($maxPersonChoices as $maxPerson)
+                            <option value="{{ $maxPerson }}">{{ $maxPerson }}</option>
+                        @endforeach
+                    @endif
+                </x-form.select>
+            </div>
+
+            <div class="flex items-center justify-between gap-2">
+                <x-form.label for="price" class="whitespace-nowrap">Price</x-form.label>
+                <x-form.select class="min-w-[200px]" id="price" wire:model.live="price">
+                    <option value="asc">Low to high</option>
+                    <option value="desc">High to low</option>
+                </x-form.select>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 mt-8">
+        @if($accommodations->isEmpty())
+            <p class="col-span-2 sm:col-span-4 lg:col-span-5 w-full text-center text-sm text-gray-500">No Available Accommodations</p>
+        @else
+            @foreach($accommodations as $accommodation)
+                <div class="bg-white p-4 border border-gray-300">
+                    <div class="w-full rounded overflow-hidden">
+                        <img src="{{ asset($accommodation->photo) }}" alt="{{ $accommodation->name }} Photo">
+                    </div>
+
+                    <div class="mt-2">
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-medium inline-block">{{ $accommodation->type }}</span>
+                        <h6 class="font-bold mt-2">{{ $accommodation->name }}</h6>
+                        <p class="text-sm text-gray-500 mt-1">{{ $accommodation->available_slots }} Max Persons</p>
+
+                        <p class="text-right text-xl font-bold mt-2 text-blue-600">
+                            ₱ {{ number_format(substr($accommodation->price, 0, -2) . '.' . substr($accommodation->price, -2), 2) }}
+                        </p>
+                    </div>
+
+                    @auth
+                        <x-button variety="primary" class="mt-4 w-full" wire:click="$dispatch('book', [{{ $accommodation->id }}])">Book Now</x-button>
+                    @endauth
+
+                    @guest
+                        <x-button variety="primary" class="mt-4 w-full" x-on:click.prevent="$dispatch('open-dialog', 'login')">Book Now</x-button>
+                    @endguest
+                </div>
+            @endforeach
+        @endif
+    </div>
+
+    @if($accommodations->count() < $totalAccommodations)
+        <div class="w-full flex justify-center mt-8">
+            <x-button variety="secondary" wire:click="loadMore">
+                Load More
+                <i class="fa-solid fa-spinner animate-spin" wire:loading wire:target="loadMore"></i>
+            </x-button>
+        </div>
+    @endif
+</div>
