@@ -34,4 +34,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Booking::class);
     }
+
+    public function amount(): string
+    {
+        return "₱" . number_format(substr($this->amount, 0, -2) . '.' . substr($this->amount, -2), 2);
+    }
 }

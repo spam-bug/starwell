@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AccommodationServiceController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', DashboardController::class)->name('admin.dashboard');
@@ -19,6 +20,7 @@ Route::prefix('staffs')->group(function () {
 });
 
 Route::get('/customers', CustomerController::class)->name('admin.customers');
+Route::get('/reports', TransactionController::class)->name('admin.reports');
 
 Route::prefix('accommodations')->group(function () {
     Route::get('/', [AccommodationController::class, 'index'])->name('admin.accommodations');

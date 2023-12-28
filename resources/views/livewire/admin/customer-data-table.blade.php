@@ -24,7 +24,7 @@
         @else
             @foreach($customers as $customer)
                 <tr class="hover:bg-gray-50 cursor-pointer">
-                    <td class="p-4 text-left capitalize font-medium">{{ $customer->name }} {{ $customer->id === auth()->id() ? '(You)' : '' }}</td>
+                    <td class="p-4 text-left capitalize font-medium">{{ $customer->name }}</td>
                     <td class="hidden sm:table-cell p-4 text-left text-gray-700">{{ $customer->username }}</td>
                     <td class="hidden sm:table-cell p-4 text-left text-gray-700">{{ $customer->email }}</td>
                     <td class="hidden sm:table-cell p-4 text-left text-gray-700">{{ $customer->address }}</td>
