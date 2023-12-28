@@ -50,7 +50,13 @@ class Membership extends Model
 
     public function scopeActive(Builder $query): void
     {
-        $query->where('status', MembershipStatus::ongoing);
+        $query->where(function ($query) {
+            $query->whereIn('status', [MembershipStatus::ongoing])
+                ->orWhere(function ($query) {
+                    $query->where('status', MembershipStatus::cancelled)
+                        ->where('end_date', '>', now()); // Add the condition for not reaching end date
+                });
+        });
     }
 
     public function scopeCancelled(Builder $query): void

@@ -53,12 +53,16 @@ class User extends Authenticatable
 
     public function activeMembershipFor(Accommodation $accommodation): bool
     {
-        return $this->memberships()->where('accommodation_id', $accommodation->id)->whereIn('status', [MembershipStatus::pending, MembershipStatus::ongoing])->exists();
+        return $this->memberships()
+            ->where('accommodation_id', $accommodation->id)->whereIn('status', [MembershipStatus::pending, MembershipStatus::ongoing])
+            ->exists();
     }
 
     public function membershipStatusFor(Accommodation $accommodation): string
     {
-        return $this->memberships()->where('accommodation_id', $accommodation->id)->first()->status->value;
+        return $this->memberships()->where('accommodation_id', $accommodation->id)
+        ->whereIn('status', [MembershipStatus::pending, MembershipStatus::ongoing])
+        ->first()->status->value;
     }
 
     public function isCustomer(): bool

@@ -32,10 +32,22 @@ class SubscriptionDataTable extends Component
         return view('livewire.customer.subscription-data-table', [
         'subscriptions' => Auth::user()->memberships()
             ->when($this->status === 'active', function ($query) {
-                $query->whereIn('status', [MembershipStatus::ongoing, MembershipStatus::pending]);
+                $query->where(function ($query) {
+                    $query->whereIn('status', [MembershipStatus::ongoing, MembershipStatus::pending])
+                        ->orWhere(function ($query) {
+                            $query->where('status', MembershipStatus::cancelled)
+                                ->where('end_date', '>', now()); // Add the condition for not reaching end date
+                        });
+                });
             })
             ->when($this->status === 'ongoing', function ($query) {
-                $query->where('status', [MembershipStatus::ongoing]);
+                $query->where(function ($query) {
+                    $query->whereIn('status', [MembershipStatus::ongoing])
+                        ->orWhere(function ($query) {
+                            $query->where('status', MembershipStatus::cancelled)
+                                ->where('end_date', '>', now()); // Add the condition for not reaching end date
+                        });
+                });
             })
             ->when($this->status === 'cancelled',  function ($query) {
                 $query->where('status', MembershipStatus::cancelled);
