@@ -8,7 +8,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.admin'), Title('Pending Reservations')]
+#[Layout('layouts.admin'), Title('Paid Reservations')]
 class PaidDataTable extends Component
 {
     public function render(): View

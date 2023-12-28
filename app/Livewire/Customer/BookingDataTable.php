@@ -48,6 +48,10 @@ class BookingDataTable extends Component
             $statuses = [BookingStatus::Pending, BookingStatus::ToPay, BookingStatus::Paid, BookingStatus::Confirmed];
         }
 
+        if ($this->status === 'confirmed') {
+            $statuses = [BookingStatus::Confirmed];
+        }
+
         if ($this->status === 'completed') {
             $statuses = [BookingStatus::Completed];
         }

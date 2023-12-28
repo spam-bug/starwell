@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Accommodation;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,16 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accommodations', function (Blueprint $table) {
+        Schema::create('memberships', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->integer('price');
-            $table->string('type');
-            $table->integer("max_person")->nullable();
-            $table->integer('max_daily_capacity')->nullable();
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Accommodation::class);
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->string('status');
-            $table->string('photo');
+            $table->string('monthly_payment_status');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accommodations');
+        Schema::dropIfExists('memberships');
     }
 };

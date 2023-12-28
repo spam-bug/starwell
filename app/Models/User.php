@@ -3,9 +3,11 @@
 namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\MembershipStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -34,9 +36,29 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(Membership::class);
+    }
+
     public function scopeMember(Builder $query): void
     {
         $query->whereIn('account_type', ['admin', 'staff']);
+    }
+
+    public function activeMembershipFor(Accommodation $accommodation): bool
+    {
+        return $this->memberships()->where('accommodation_id', $accommodation->id)->whereIn('status', [MembershipStatus::pending, MembershipStatus::ongoing])->exists();
+    }
+
+    public function membershipStatusFor(Accommodation $accommodation): string
+    {
+        return $this->memberships()->where('accommodation_id', $accommodation->id)->first()->status->value;
     }
 
     public function isCustomer(): bool
@@ -52,10 +74,5 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->account_type === 'admin';
-    }
-
-    public function bookings(): HasMany
-    {
-        return $this->hasMany(Booking::class);
     }
 }

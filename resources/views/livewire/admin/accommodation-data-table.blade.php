@@ -18,8 +18,6 @@
             <th class="text-left text-sm font-medium px-4 py-2">Name</th>
             <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Service Type</th>
             <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Price</th>
-            <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Max Person</th>
-            <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Available</th>
             <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Status</th>
             @admin
             <th class="text-right text-sm font-medium px-4 py-2">Actions</th>
@@ -47,9 +45,6 @@
                     <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
                         ₱ {{ number_format(substr($accommodation->price, 0, -2) . '.' . substr($accommodation->price, -2), 2) }}
                     </td>
-
-                    <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $accommodation->max_person }}</td>
-                    <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $accommodation->available_slots }}</td>
                     <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
                         <span class="{{ $accommodation->status->getStatusClass() }} px-2 py-1 rounded text-xs font-medium tracking-wide">{{ $accommodation->status }}</span>
                     </td>

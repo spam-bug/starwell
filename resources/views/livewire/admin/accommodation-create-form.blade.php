@@ -5,13 +5,13 @@
 
     <form wire:submit="save" class="p-6" enctype="multipart/form-data">
         <x-form.group>
-            <x-form.label for="service" required>Service</x-form.label>
-            <x-form.select wire:model="form.service">
+            <x-form.label for="service" required>Type</x-form.label>
+            <x-form.select wire:model.live="form.accommodationType">
                 @foreach(\App\Enums\AccommodationType::cases() as $case)
                     <option value="{{ $case->value }}">{{ $case->name }}</option>
                 @endforeach
             </x-form.select>
-            <x-form.error for="form.service" />
+            <x-form.error for="form.accommodationType" />
         </x-form.group>
 
         <x-form.group>
@@ -36,7 +36,7 @@
                     <div class="text-sm text-gray-500">
                         <p>Image Type: PNG, JPG, JPEG</p>
                         <p>Image Ratio: 1x1</p>
-                        <p>Image File Size: 2MB</p>
+                        <p>Image File Size: 4MB</p>
                     </div>
 
                     <div class="flex gap-2">
@@ -70,11 +70,17 @@
             <x-form.error for="form.price" />
         </x-form.group>
 
-        <x-form.group>
-            <x-form.label for="max-person" required>Max Person</x-form.label>
-            <x-form.input type="number" id="max-person" wire:model.blur="form.maxPerson" />
-            <x-form.error for="form.maxPerson" />
-        </x-form.group>
+        @if(\App\Enums\AccommodationType::from($form->accommodationType) !== \App\Enums\AccommodationType::Gym)
+            <x-form.group>
+                @if(\App\Enums\AccommodationType::from($form->accommodationType) === \App\Enums\AccommodationType::Barbershop)
+                    <x-form.label for="max" required>Max Daily Capacity</x-form.label>
+                @else
+                    <x-form.label for="max" required>Max Person</x-form.label>
+                @endif
+                <x-form.input type="number" id="max" wire:model.blur="form.max" />
+                <x-form.error for="form.max" />
+            </x-form.group>
+        @endif
 
         <div class="flex gap-2 justify-end">
             <x-button.link href="{{ route('admin.accommodations') }}" wire:navigate variety="secondary">Cancel</x-button.link>

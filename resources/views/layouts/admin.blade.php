@@ -84,11 +84,11 @@
                             <span>Paid</span>
                         </a>
 
-                        <a class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="{{ route('admin.reservations.reserved') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                             <span>Reserved</span>
                         </a>
 
-                        <a class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="{{ route('admin.reservations.cancelled') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                             <span>Cancelled</span>
                         </a>
                     </div>

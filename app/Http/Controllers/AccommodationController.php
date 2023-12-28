@@ -8,8 +8,13 @@ use Illuminate\Http\Request;
 
 class AccommodationController extends Controller
 {
-    public function __invoke(): View
+    public function index(): View
     {
-        return view('accommodations');
+        return view('accommodations.index');
+    }
+
+    public function show(Accommodation $accommodation)
+    {
+        return view('accommodations.show', compact('accommodation'));
     }
 }

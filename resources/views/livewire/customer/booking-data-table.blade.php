@@ -5,6 +5,11 @@
             Active
         </label>
 
+        <label for="confirmed" class="cursor-pointer {{ $status === 'completed' ? 'text-gray-900 font-medium' : 'text-gray-500' }}">
+            <input type="radio" wire:model.live="status" value="confirmed" id="confirmed" class="hidden" />
+            Confirmed
+        </label>
+
         <label for="completed" class="cursor-pointer {{ $status === 'completed' ? 'text-gray-900 font-medium' : 'text-gray-500' }}">
             <input type="radio" wire:model.live="status" value="completed" id="completed" class="hidden" />
             Completed
@@ -24,9 +29,12 @@
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Service Type</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Price</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Quantity</th>
-                <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Amount</th>
+                <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Total Amount</th>
+                <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Check In / Booking Date</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Status</th>
-                <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>
+                @if($status === 'active')
+                    <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>    
+                @endif
             </tr>
             </thead>
 
@@ -41,26 +49,37 @@
                         <td class="p-4 text-left capitalize font-medium">{{ $booking->accommodation->name }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $booking->accommodation->type }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            ₱ {{ number_format(substr($booking->accommodation->price, 0, -2) . '.' . substr($booking->accommodation->price, -2), 2) }}
+                            {{ $booking->accommodation->price() }}
                         </td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $booking->person_quantity }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            ₱ {{ number_format(substr($booking->amount, 0, -2) . '.' . substr($booking->amount, -2), 2) }}
+                            {{ $booking->amount() }}
                         </td>
+
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap text-sm">
+                            @if($booking->accommodation->type === \App\Enums\AccommodationType::Resort)
+                                {{ \Carbon\Carbon::parse($booking->checkin_date)->format('M d, Y h:i A') }}
+                            @else
+                                {{ \Carbon\Carbon::parse($booking->booking_date)->format('M d, Y h:i A') }}
+                            @endif
+                        </td>
+
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
                             <span class="{{ $booking->status->getStatusClass() }} px-2 py-1 rounded font-medium text-xs">
                                 {{ str_replace('_', ' ', $booking->status->value) }}
                             </span>
                         </td>
-                        <td class="p-4">
-                            @if($status === 'active')
-                                <x-button variety="secondary" wire:click.prevent="cancel({{ $booking->id }})">Cancel</x-button>
-                            @endif
+                        @if($status === 'active')
+                            <td class="p-4">
+                                @if($booking->status !== App\Enums\BookingStatus::Confirmed)
+                                    <x-button variety="secondary" wire:click.prevent="cancel({{ $booking->id }})">Cancel</x-button>
+                                @endif
 
-                            @if($booking->status === \App\Enums\BookingStatus::ToPay)
-                                <x-button variety="primary" x-on:click.prevent="$dispatch('payment', [{{ $booking }}])">Pay Now</x-button>
-                            @endif
-                        </td>
+                                @if($booking->status === \App\Enums\BookingStatus::ToPay)
+                                    <x-button variety="primary" x-on:click.prevent="$dispatch('payment', [{{ $booking }}])">Pay Now</x-button>
+                                @endif
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             @endif

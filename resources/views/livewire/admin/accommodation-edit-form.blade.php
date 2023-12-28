@@ -43,7 +43,7 @@
                     <div class="text-sm text-gray-500">
                         <p>Image Type: PNG, JPG, JPEG</p>
                         <p>Image Ratio: 1x1</p>
-                        <p>Image File Size: 2MB</p>
+                        <p>Image File Size: 4MB</p>
                     </div>
 
                     <div class="flex gap-2">

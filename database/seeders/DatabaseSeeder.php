@@ -16,11 +16,23 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
          \App\Models\User::create([
-             'name' => 'Mark Lim',
-             'username' => 'spambug',
-             'email' => 'marklim@example.com',
+             'name' => 'Admin User',
+             'username' => 'admin',
+             'email' => 'admin@example.com',
              'password' => Hash::make('qweqweqwe'),
              'account_type' => 'admin',
+         ]);
+
+        \App\Models\User::create([
+            'name' => 'Demo User',
+            'username' => 'demo',
+            'email' => 'demo@example.com',
+            'password' => Hash::make('qweqweqwe'),
+            'account_type' => 'customer',
+        ]);
+
+         $this->call([
+            AccommodationSeeder::class,
          ]);
     }
 }

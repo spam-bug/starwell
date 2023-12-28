@@ -36,7 +36,7 @@
             </x-form.group>
 
             <div class="flex justify-end gap-2">
-                <x-button variety="secondary" x-on:click.prevent="$dispatch('close-modal')">Cancel</x-button>
+                <x-button variety="secondary" x-on:click.prevent="$dispatch('close-dialog')">Cancel</x-button>
                 <x-button variety="primary">
                     Confirm
                     <i class="fa-solid fa-spinner animate-spin" wire:loading wire:target="confirm"></i>

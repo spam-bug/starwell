@@ -26,4 +26,6 @@ Route::prefix('accommodations')->group(function () {
 Route::prefix('reservations')->group(function() {
     Route::get('/pending', \App\Livewire\Admin\Reservations\PendingDataTable::class)->name('admin.reservations.pending');
     Route::get('/paid', \App\Livewire\Admin\Reservations\PaidDataTable::class)->name('admin.reservations.paid');
+    Route::get('/reserved', \App\Livewire\Admin\Reservations\ConfirmedDataTable::class)->name('admin.reservations.reserved');
+    Route::get('/cancelled', \App\Livewire\Admin\Reservations\CancelledDataTable::class)->name('admin.reservations.cancelled');
 });

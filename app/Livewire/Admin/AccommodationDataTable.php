@@ -22,7 +22,7 @@ class AccommodationDataTable extends Component
         }
 
         return view('livewire.admin.accommodation-data-table', [
-            'accommodations' => Accommodation::whereLike(['name', 'type', 'price', 'max_person', 'available_slots', 'status'], $value)->paginate(10)
+            'accommodations' => Accommodation::whereLike(['name', 'type', 'price', 'status'], $value)->paginate(10)
         ]);
     }
 }

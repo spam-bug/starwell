@@ -16,8 +16,9 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'accommodation_id',
-        'check_in',
-        'check_out',
+        'checkin_date',
+        'checkout_date',
+        'booking_date',
         'person_quantity',
         'amount',
         'status',
@@ -60,5 +61,15 @@ class Booking extends Model
     public function scopeCancelled(Builder $query): void
     {
         $query->whereIn('status', [BookingStatus::CancelledByClient, BookingStatus::CancelledByHost, BookingStatus::CancelledBySystem]);
+    }
+
+    public function amount()
+    {
+        return "₱" . number_format(substr($this->amount, 0, -2) . '.' . substr($this->amount, -2), 2);
+    }
+
+    public function downPayment()
+    {
+        return "₱" . number_format(substr($this->amount / 2, 0, -2) . '.' . substr($this->amount / 2, -2), 2);
     }
 }

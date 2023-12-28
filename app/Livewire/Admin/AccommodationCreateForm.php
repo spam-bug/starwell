@@ -15,7 +15,7 @@ class AccommodationCreateForm extends Component
 
     public function mount(): void
     {
-        $this->form->service = AccommodationType::Resort->value;
+        $this->form->accommodationType = AccommodationType::Resort->value;
     }
 
     public function updatedFormPrice(): void

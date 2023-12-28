@@ -12,34 +12,37 @@ class AccommodationForm extends Form
 {
     public ?Accommodation $accommodation = null;
 
-    public string $service = '';
+    public string $accommodationType = '';
     public string $name = '';
     public string $description = '';
     public string $price = '';
-    public int $maxPerson = 0;
+    public int|string $max = '';
     public $photo;
 
     public function rules(): array
     {
-        $services  = [];
+        $types  = [];
 
         foreach (AccommodationType::cases() as $case) {
-            $services[] = $case->value;
+            $types[] = $case->value;
         }
 
-        $services = implode(',', $services);
+        $types = implode(',', $types);
 
         $rules = [
-            'service' => ['required', "in:$services"],
+            'accommodationType' => ['required', "in:$types"],
             'name' => ['required', 'alpha_spaces'],
             'description' => ['required'],
             'price' => ['required', 'currency'],
-            'maxPerson' => ['required','integer','min:1'],
             'photo' => ['required'],
         ];
 
+        if (AccommodationType::from($this->accommodationType) !== AccommodationType::Gym) {
+            $rules['max'] =  ['required','integer','min:1'];
+        }
+
         if ($this->photo instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-            $rules['photo'] = array_merge($rules['photo'], ['image', 'max:2048', 'dimensions:ratio=1/1']);
+            $rules['photo'] = array_merge($rules['photo'], ['image', 'max:4096', 'dimensions:ratio=1/1']);
         }
 
         return $rules;
@@ -52,16 +55,24 @@ class AccommodationForm extends Form
 
         $path = $this->photo->store('photos');
 
-        return Accommodation::create([
+        $data = [
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->formattedPrice(),
-            'type' => $this->service,
-            'max_person' =>  $this->maxPerson,
-            'available_slots' => $this->maxPerson,
+            'type' => $this->accommodationType,
             'status' => AccommodationStatus::available,
             'photo' => $path,
-        ]);
+        ];
+
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Resort || AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
+            $data['max_person'] = $this->max;
+        }
+
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Barbershop) {
+            $data['max_daily_capacity'] = $this->max;
+        }
+
+        return Accommodation::create($data);
     }
 
     public function update(): Accommodation
@@ -69,11 +80,11 @@ class AccommodationForm extends Form
         $this->validate();
 
         $data = [
-            'accommodation_service_id' => $this->service,
+            'accommodation_service_id' => $this->accommodationType,
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->formattedPrice(),
-            'max_person' => $this->maxPerson,
+            'max_person' => $this->max,
         ];
 
         if ($this->photo instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
@@ -90,11 +101,11 @@ class AccommodationForm extends Form
     {
         $this->accommodation = $accommodation;
 
-        $this->service = $accommodation->type->value;
+        $this->accommodationType = $accommodation->type->value;
         $this->name = $accommodation->name;
         $this->description = $accommodation->description;
         $this->price = number_format(substr($accommodation->price, 0, -2) . '.' . substr($accommodation->price, -2), 2);
-        $this->maxPerson = $accommodation->max_person;
+        $this->max = $accommodation->max_person;
         $this->photo = $accommodation->photo;
     }
 

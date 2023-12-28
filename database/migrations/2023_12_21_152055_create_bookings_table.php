@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Accommodation::class);
-            $table->dateTime('check_in');
-            $table->dateTime('check_out');
+            $table->dateTime('checkin_date')->nullable();
+            $table->dateTime('checkout_date')->nullable();
+            $table->dateTime('booking_date')->nullable();
             $table->integer('person_quantity');
             $table->integer('amount');
             $table->string('status');

@@ -12,11 +12,9 @@ class Accommodations extends Component
 {
     public int $totalAccommodations;
     public int $perPage = 5;
-    public string $searchTerm = '';
     public string $type = '';
     public array $maxPersonChoices = [];
     public int $maxPerson = 0;
-    public string $price = 'asc';
 
     protected $listeners = ['refresh' => '$refresh'];
 
@@ -37,13 +35,11 @@ class Accommodations extends Component
     public function render(): View
     {
         return view('livewire.accommodations', [
-            'accommodations' => Accommodation::whereLike('name', $this->searchTerm)
-                ->whereLike('type', $this->type)
+            'accommodations' => Accommodation::whereLike('type', $this->type)
                 ->when($this->maxPerson, function ($query) {
                     $query->whereLike('max_person', $this->maxPerson);
                 })
                 ->where('status', AccommodationStatus::available)
-                ->orderBy('price', $this->price)
                 ->take($this->perPage)->get(),
         ]);
     }

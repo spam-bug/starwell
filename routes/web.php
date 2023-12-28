@@ -19,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::get('/accommodations', AccommodationController::class)->name('accommodations');
+Route::prefix('accommodations')->group(function () {
+    Route::get('/', [AccommodationController::class, 'index'])->name('accommodations');
+    Route::get('/{accommodation}', [AccommodationController::class, 'show'])->name('accommodations.show');
+});
 
 
 Route::post('/logout', LogOutController::class)->name('logout');

@@ -56,7 +56,7 @@
             <div class="mt-8">
                 <div class="flex items-center justify-between border-b border-gray-300 border-dashed pb-2">
                     <p class="font-medium">Accommodation Price</p>
-                    <p>₱ {{ number_format(substr($booking->accommodation->price, 0, -2) . '.' . substr($booking->accommodation->price, -2), 2) }}</p>
+                    <p>{{ $booking->accommodation->price() }}</p>
                 </div>
 
                 <div class="flex items-center justify-between border-b border-gray-300 border-dashed mt-2 pb-2">
@@ -66,12 +66,12 @@
 
                 <div class="flex items-center justify-between border-b border-gray-300 border-dashed mt-2 pb-2">
                     <p class="font-medium">Total Amount</p>
-                    <p>₱ {{ number_format(substr($booking->amount, 0, -2) . '.' . substr($booking->amount, -2), 2) }}</p>
+                    <p>{{ $booking->amount() }}</p>
                 </div>
 
                 <div class="flex items-center justify-between mt-2">
                     <p class="font-medium">Required Down Payment</p>
-                    <p>₱ {{ number_format(substr($booking->amount / 2, 0, -2) . '.' . substr($booking->amount / 2, -2), 2) }}</p>
+                    <p>{{ $booking->downPayment() }}</p>
                 </div>
             </div>
 

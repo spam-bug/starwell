@@ -21,6 +21,7 @@
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Amount</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Quantity</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Down Payment</th>
+                <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Check In / Booking Date</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Status</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>
             </tr>
@@ -37,11 +38,18 @@
                         <td class="p-4 text-left capitalize font-medium">{{ $reservation->accommodation->name }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->accommodation->type }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            ₱ {{ number_format(substr($reservation->amount, 0, -2) . '.' . substr($reservation->amount, -2), 2) }}
+                            {{ $reservation->amount() }}
                         </td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->person_quantity }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            ₱ {{ number_format(substr($reservation->amount / 2, 0, -2) . '.' . substr($reservation->amount / 2, -2), 2) }}
+                            {{ $reservation->downPayment() }}
+                        </td>
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
+                            @if($reservation->accommodation->type === \App\Enums\AccommodationType::Resort)
+                                {{ \Carbon\Carbon::parse($reservation->checkin_date)->format('M d, Y h:i A') }}
+                            @else
+                                {{ \Carbon\Carbon::parse($reservation->booking_date)->format('M d, Y h:i A') }}
+                            @endif
                         </td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
                             <span class="{{ $reservation->status->getStatusClass() }} px-2 py-1 rounded font-medium text-xs">
