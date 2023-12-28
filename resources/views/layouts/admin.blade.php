@@ -124,7 +124,7 @@
                     <span>Chatbot</span>
                 </a>
 
-                <a href="#" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                <a href="{{ route('admin.customers') }}" wire:navigate class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                     <i class="fa-solid fa-user"></i>
                     <span>Customers</span>
                 </a>

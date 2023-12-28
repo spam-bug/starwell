@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AccommodationController;
 use App\Http\Controllers\Admin\AccommodationServiceController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StaffController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ Route::prefix('staffs')->group(function () {
         Route::get('/{staff}/edit', [StaffController::class, 'edit'])->name('admin.staffs.edit');
     });
 });
+
+Route::get('/customers', CustomerController::class)->name('admin.customers');
 
 Route::prefix('accommodations')->group(function () {
     Route::get('/', [AccommodationController::class, 'index'])->name('admin.accommodations');
