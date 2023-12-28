@@ -1,5 +1,5 @@
 <div>
-    <x-dialog :title="$booking->accommodation->name ?? ''" :$identifier>
+    <x-dialog :$title :$identifier>
         <div class="flex flex-col justify-center items-center">
             <p class="font-medium mt-2">GCash</p>
             <img src="{{ Vite::image('gcash.jpg') }}" alt="GCash QR Code">
@@ -7,7 +7,13 @@
 
         @if($booking)
             <div class="mt-4">
-                <p class="font-medium">Required Down Payment: ₱ {{ number_format(substr($booking->amount / 2, 0, -2) . '.' . substr($booking->amount / 2, -2), 2) }}</p>
+                <p class="font-medium">Required Down Payment: {{ $booking->downPayment() }}</p>
+            </div>
+        @endif
+
+        @if($membership)
+            <div class="mt-4">
+                <p class="font-medium">Monthly Charged: {{ $membership->accommodation->price() }}</p>
             </div>
         @endif
 

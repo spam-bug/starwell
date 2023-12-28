@@ -94,6 +94,31 @@
                     </div>
                 </div>
 
+                <div x-data="{ expanded: false }">
+                    <button x-on:click="expanded = !expanded" class="w-full flex items-center justify-between gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <div>
+                            <i class="fa-solid fa-bolt-lightning"></i>
+                            <span>Subscriptions</span>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300 ease-in-out" x-bind:class="{ 'rotate-180': expanded }"></i>
+                    </button>
+
+                    <div x-show="expanded" x-collapse x-on:click.outside="expanded = false">
+                        <a href="{{ route('admin.subscriptions.pending') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                            <span>Pending</span>
+                        </a>
+
+                        <a href="{{ route('admin.subscriptions.active') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                            <span>Active</span>
+                        </a>
+
+                        <a href="{{ route('admin.subscriptions.cancelled') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                            <span>Cancelled</span>
+                        </a>
+                    </div>
+                </div>
+
                 <a href="#" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                     <i class="fa-solid fa-comment"></i>
                     <span>Chatbot</span>

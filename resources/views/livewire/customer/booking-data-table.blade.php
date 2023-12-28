@@ -5,7 +5,7 @@
             Active
         </label>
 
-        <label for="confirmed" class="cursor-pointer {{ $status === 'completed' ? 'text-gray-900 font-medium' : 'text-gray-500' }}">
+        <label for="confirmed" class="cursor-pointer {{ $status === 'confirmed' ? 'text-gray-900 font-medium' : 'text-gray-500' }}">
             <input type="radio" wire:model.live="status" value="confirmed" id="confirmed" class="hidden" />
             Confirmed
         </label>
