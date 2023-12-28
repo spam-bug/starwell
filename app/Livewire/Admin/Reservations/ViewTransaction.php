@@ -2,10 +2,13 @@
 
 namespace App\Livewire\Admin\Reservations;
 
+use App\Enums\AccommodationType;
 use App\Enums\BookingStatus;
 use App\Enums\TransactionStatus;
 use App\Events\BookingHasBeenReserved;
 use App\Models\Booking;
+use App\Services\Sinch;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -30,6 +33,14 @@ class ViewTransaction extends Component
 
         $booking->status = BookingStatus::Confirmed;
         $booking->save();
+
+        if ($booking->accommodation->type === AccommodationType::Barbershop || $booking->accommodation->type === AccommodationType::Restobar) {
+            $message = "You're booking for {$booking->accommodation->name} on " . Carbon::parse($booking->booking_date)->format('F d, Y') . " has been reserved." ;
+        } else {
+            $message = "You're booking for {$booking->accommodation->name} from " . Carbon::parse($booking->checkin_date)->format('F d, Y') . " to " . Carbon::parse($booking->checkout_date)->format('F d, Y') . " has been reserved.";
+        }
+
+        Sinch::send($message);
 
         event(new BookingHasBeenReserved($booking));
 

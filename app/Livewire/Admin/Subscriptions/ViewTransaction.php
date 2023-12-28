@@ -7,6 +7,7 @@ use App\Enums\MembershipStatus;
 use App\Enums\TransactionStatus;
 use App\Models\Membership;
 use App\Models\Transaction;
+use App\Services\Sinch;
 use Carbon\Carbon;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -44,11 +45,17 @@ class ViewTransaction extends Component
         if (is_null($this->membership->start_date)) {
             $this->membership->start_date = now();
             $this->membership->end_date = now()->addMonth();
+
+            $message = "Thank you for becoming a member of our {$this->membership->accommodation->name}. You're payment has been confirmed.";
         } else {
             $this->membership->end_date = Carbon::parse($this->membership->end_date)->addMonth();
+
+            $message = "Thank you for renewing you membership for {$this->membership->accommodation->name}";
         }
 
         $this->membership->save();
+
+        Sinch::send($message);
 
         $this->dispatch('close-dialog');
     }
