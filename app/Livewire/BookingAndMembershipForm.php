@@ -8,6 +8,7 @@ use App\Enums\MembershipMonthlyPaymentStatus;
 use App\Enums\MembershipStatus;
 use App\Events\Booking;
 use App\Models\Accommodation;
+use App\Models\Membership;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -47,16 +48,48 @@ class BookingAndMembershipForm extends Component
 
     public function join(): Void
     {
-        if (Auth::user()->memberships->where('accommodation_id', $this->accommodation->id)->whereIn('status', [MembershipStatus::pending, MembershipStatus::ongoing])->count()) {
+        $activeMemberships = Auth::user()->memberships()
+            ->where('accommodation_id', $this->accommodation->id)
+            ->whereIn('status', [MembershipStatus::pending, MembershipStatus::ongoing])
+            ->count();
+
+        // Check if there is an active membership
+        if ($activeMemberships) {
             $this->dispatch('toast', message: "You have an active membership");
             return;
         }
 
-        Auth::user()->memberships()->create([
-            'accommodation_id' => $this->accommodation->id,
-            'status' => MembershipStatus::pending,
-            'monthly_payment_status' => MembershipMonthlyPaymentStatus::toPay,
-        ]);
+        // Check if there is a cancelled subscription for the current accommodation that has not reached its end_date
+        $cancelledSubscription = Auth::user()->memberships()
+            ->where('accommodation_id', $this->accommodation->id)
+            ->where('status', MembershipStatus::cancelled)
+            ->where('end_date', '>', now())
+            ->first();
+
+        if ($cancelledSubscription) {
+            // Reactivate the cancelled subscription
+
+            $sevenDaysFromNow = now()->addDays(7);
+
+            $data = [
+                'status' => MembershipStatus::ongoing,
+            ];
+
+            if ($cancelledSubscription->end_date < $sevenDaysFromNow) {
+                $data['monthly_payment_status'] = MembershipMonthlyPaymentStatus::toPay;
+            } else {
+                $data['monthly_payment_status'] = MembershipMonthlyPaymentStatus::paid;
+            }
+
+            $cancelledSubscription->update($data);
+        } else {
+            // Create a new membership
+            Auth::user()->memberships()->create([
+                'accommodation_id' => $this->accommodation->id,
+                'status' => MembershipStatus::pending,
+                'monthly_payment_status' => MembershipMonthlyPaymentStatus::toPay,
+            ]);
+        }
     }
 
     private function bookResort(): void

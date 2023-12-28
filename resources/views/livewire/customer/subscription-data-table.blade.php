@@ -91,6 +91,10 @@
                                     <x-button variety="secondary" wire:click.prevent="cancel({{ $subscription->id }})">Cancel</x-button>
                                 @endif
 
+                                @if($subscription->status === \App\Enums\MembershipStatus::cancelled)
+                                    <x-button variety="primary" wire:click.prevent="resubcribe({{ $subscription->id }})">Resubscribe</x-button>
+                                @endif
+
                                 @if($subscription->monthly_payment_status === \App\Enums\MembershipMonthlyPaymentStatus::toPay)
                                     <x-button variety="primary" x-on:click.prevent="$dispatch('subscribe-payment', [{{ $subscription }}])">Pay Now</x-button>
                                 @endif

@@ -4,13 +4,14 @@ namespace App\Livewire\Customer;
 
 use App\Models\Booking;
 use Livewire\Component;
+use App\Models\Membership;
 use App\Enums\BookingStatus;
+use App\Enums\MembershipStatus;
 use App\Enums\AccommodationType;
 use App\Enums\AccommodationStatus;
-use App\Enums\MembershipStatus;
-use App\Models\Membership;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\MembershipMonthlyPaymentStatus;
 
 class SubscriptionDataTable extends Component
 {
@@ -23,6 +24,21 @@ class SubscriptionDataTable extends Component
         $membership = Membership::find($id);
 
         $membership->status = MembershipStatus::cancelled;
+
+        $membership->save();
+    }
+
+    public function resubcribe($id)
+    {
+        $membership = Membership::find($id);
+        
+        $membership->status = MembershipStatus::ongoing;
+
+        $sevenDaysFromNow = now()->addDays(7);
+
+        if ($membership->end_date < $sevenDaysFromNow) {
+            $membership->monthly_payment_status = MembershipMonthlyPaymentStatus::toPay;
+        }
 
         $membership->save();
     }
