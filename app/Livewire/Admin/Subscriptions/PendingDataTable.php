@@ -15,6 +15,7 @@ class PendingDataTable extends Component
     {
         $membership = Membership::find($id);
         $membership->status = MembershipStatus::cancelled;
+        $membership->save();
     }
 
     public function render()
