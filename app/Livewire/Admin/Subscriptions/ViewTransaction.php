@@ -29,6 +29,7 @@ class ViewTransaction extends Component
         $this->membership = $membership;
 
         $this->transaction = $membership->transactions()->where('status', TransactionStatus::Pending)->first();
+
         $this->dispatch('open-dialog', identifier: $this->identifier);
     }
 

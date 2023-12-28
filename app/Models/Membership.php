@@ -44,7 +44,8 @@ class Membership extends Model
 
     public function scopePending(Builder $query): void
     {
-        $query->whereIn('monthly_payment_status', [MembershipMonthlyPaymentStatus::toPay, MembershipMonthlyPaymentStatus::verifying]);
+        $query->whereIn('monthly_payment_status', [MembershipMonthlyPaymentStatus::toPay, MembershipMonthlyPaymentStatus::verifying])
+            ->where('status', '!=', MembershipStatus::cancelled);
     }
 
     public function scopeActive(Builder $query): void

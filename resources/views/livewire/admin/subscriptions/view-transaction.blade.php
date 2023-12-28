@@ -1,4 +1,5 @@
 <div>
+    @if($transaction)
     <x-dialog :title="$membership->accommodation->name ?? ''" :$identifier>
         @if ($membership)
             <div class="pb-4 border-b border-gray-300 border-dashed">
@@ -71,5 +72,5 @@
             </div>
         @endif
     </x-dialog>
-
+    @endif
 </div>
