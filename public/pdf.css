@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 32px;
+}
+
+header h1 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #333333;
+}
+
+header h2 {
+    margin-top: 32px;
+}
+
+main {
+    padding: 32px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    background-color: #3b82f6;
+}
+
+thead tr th {
+    padding: 4px 8px;
+    text-align: left;
+    color: white;
+}
+
+tbody tr td {
+    text-align: left;
+    padding: 8px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f3f4f6;
+}
+
+.transaction_number {
+    font-weight: bold;
+}
+
+.total {
+    border-top: 2px solid black;
+}
+
+.total td {
+    padding-top: 16px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+

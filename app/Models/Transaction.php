@@ -32,11 +32,21 @@ class Transaction extends Model
 
     public function booking(): BelongsTo
     {
-        return $this->belongsTo(Booking::class);
+        return $this->belongsTo(Booking::class, 'booking_id');
+    }
+
+    public function membership(): BelongsTo
+    {
+        return $this->belongsTo(Membership::class, 'membership_id');
     }
 
     public function amount(): string
     {
-        return "₱" . number_format(substr($this->amount, 0, -2) . '.' . substr($this->amount, -2), 2);
+        return number_format(substr($this->amount, 0, -2) . '.' . substr($this->amount, -2), 2);
+    }
+
+    public function downPayment(): string
+    {
+        return number_format(substr($this->amount / 2, 0, -2) . '.' . substr($this->amount / 2, -2), 2);
     }
 }

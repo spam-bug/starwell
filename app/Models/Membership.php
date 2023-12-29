@@ -34,7 +34,7 @@ class Membership extends Model
 
     public function accommodation(): BelongsTo
     {
-        return $this->belongsTo(Accommodation::class);
+        return $this->belongsTo(Accommodation::class, 'accommodation_id');
     }
 
     public function transactions(): HasMany

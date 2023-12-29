@@ -20,7 +20,8 @@ Route::prefix('staffs')->group(function () {
 });
 
 Route::get('/customers', CustomerController::class)->name('admin.customers');
-Route::get('/reports', TransactionController::class)->name('admin.reports');
+Route::get('/reports', [TransactionController::class, 'index'])->name('admin.reports');
+Route::get('reports/download', [TransactionController::class, 'download'])->name('admin.reports.download');
 
 Route::prefix('accommodations')->group(function () {
     Route::get('/', [AccommodationController::class, 'index'])->name('admin.accommodations');
