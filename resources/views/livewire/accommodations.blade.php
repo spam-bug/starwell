@@ -22,25 +22,6 @@
                     @endif
                 </x-form.select>
             </div>
-
-            @if(!empty($type))
-                @if(\App\Enums\AccommodationType::from($type) === \App\Enums\AccommodationType::Resort)
-                    <div class="flex items-center justify-between gap-2">
-                        <x-form.label for="checkin_date" class="whitespace-nowrap">Check In Date</x-form.label>
-                        <x-form.input type="date" />
-                    </div>
-
-                    <div class="flex items-center justify-between gap-2">
-                        <x-form.label for="checkout_date" class="whitespace-nowrap">Check Out Date</x-form.label>
-                        <x-form.input type="date" />
-                    </div>
-                @elseif(\App\Enums\AccommodationType::from($type) === \App\Enums\AccommodationType::Barbershop || \App\Enums\AccommodationType::from($type) === \App\Enums\AccommodationType::Restobar)
-                    <div class="flex items-center justify-between gap-2">
-                        <x-form.label for="booking_date" class="whitespace-nowrap">Booking Date</x-form.label>
-                        <x-form.input type="date" />
-                    </div>
-                @endif
-            @endif
         </div>
     </div>
 
