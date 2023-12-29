@@ -79,6 +79,7 @@
         <p class="text-sm text-gray-500">Copyright © 2020 All rights reserved.</p>
     </footer>
 
+    <livewire:chatbot />
     @livewireScripts
 </body>
 </html>
