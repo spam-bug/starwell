@@ -55,16 +55,6 @@
                     <span>Accommodations</span>
                 </a>
 
-                <a href="#" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
-                    <i class="fa-solid fa-tag"></i>
-                    <span>Products</span>
-                </a>
-
-                <a href="#" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
-                    <i class="fa-regular fa-image"></i>
-                    <span>Gallery</span>
-                </a>
-
                 <div x-data="{ expanded: false }">
                     <button x-on:click="expanded = !expanded" class="w-full flex items-center justify-between gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                         <div>
@@ -132,11 +122,6 @@
                 <a href="{{ route('admin.staffs') }}" wire:navigate class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                     <i class="fa-solid fa-user"></i>
                     <span>Staff</span>
-                </a>
-
-                <a href="#" class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
-                    <i class="fa-solid fa-comment-dots"></i>
-                    <span>Feedbacks</span>
                 </a>
 
                 <a href="{{ route('admin.reports') }}" wire:navigate class="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
