@@ -29,6 +29,15 @@ Route::prefix('accommodations')->group(function () {
     Route::get('/{accommodation}/edit', [AccommodationController::class, 'edit'])->name('admin.accommodations.edit');
 });
 
+Route::prefix('products')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.products');
+    Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('admin.products.create');
+    Route::get('/{product}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::get('/inventory', [\App\Http\Controllers\ProductInventoryController::class, 'index'])->name('admin.products.inventories');
+    Route::get('/inventory/create', [\App\Http\Controllers\ProductInventoryController::class, 'create'])->name('admin.products.inventories.create');
+    Route::get('/inventory/{inventory}/edit', [\App\Http\Controllers\ProductInventoryController::class, 'edit'])->name('admin.products.inventories.edit');
+});
+
 Route::prefix('reservations')->group(function() {
     Route::get('/pending', \App\Livewire\Admin\Reservations\PendingDataTable::class)->name('admin.reservations.pending');
     Route::get('/paid', \App\Livewire\Admin\Reservations\PaidDataTable::class)->name('admin.reservations.paid');

@@ -4,9 +4,12 @@ namespace App\Livewire\Admin;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CustomerDataTable extends Component
 {
+    use WithPagination;
+
     public string $searchTerm = '';
 
     public function render()

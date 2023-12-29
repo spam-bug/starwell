@@ -66,11 +66,11 @@
                     </button>
 
                     <div x-show="expanded" x-collapse x-on:click.outside="expanded = false">
-                        <a href="{{ route('admin.reservations.pending') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="{{ route('admin.products') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                             <span>List</span>
                         </a>
 
-                        <a href="{{ route('admin.reservations.paid') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="{{ route('admin.products.inventories') }}" wire:navigate class="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                             <span>Inventory</span>
                         </a>
                     </div>
