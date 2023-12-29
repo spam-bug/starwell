@@ -25,6 +25,9 @@ Route::prefix('accommodations')->group(function () {
     Route::get('/{accommodation}', [AccommodationController::class, 'show'])->name('accommodations.show');
 });
 
+Route::get('/gallery', function () {
+    return view('gallery');
+})->name('gallery');
 
 Route::post('/logout', LogOutController::class)->name('logout');
 

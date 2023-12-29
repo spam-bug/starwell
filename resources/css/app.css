@@ -7,3 +7,22 @@
 [x-cloak] {
     display: none!important;
 }
+
+.masonry-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(25% - 10px), 1fr));
+    gap: 20px;
+}
+
+.masonry-item {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.masonry-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}

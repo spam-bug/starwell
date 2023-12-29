@@ -40,8 +40,8 @@
                                 <a href="{{ route('subscriptions', auth()->user()) }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">SUBSCRIPTIONS</a>
                             @endif
 
-                            <a class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">GALLERY</a>
-                            <a class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">ABOUT</a>
+                            <a href="{{ route('gallery') }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">GALLERY</a>
+{{--                            <a class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">ABOUT</a>--}}
                         </div>
 
                         @guest
