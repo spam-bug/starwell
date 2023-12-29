@@ -9,6 +9,7 @@ use App\Enums\MembershipStatus;
 use App\Events\Booking;
 use App\Models\Accommodation;
 use App\Models\Membership;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -101,6 +102,13 @@ class BookingAndMembershipForm extends Component
                     ->where('checkout_date', '>=', $this->checkoutDate);
             })->get();
 
+        $checkinDate = Carbon::parse($this->checkinDate);
+        $checkoutDate = Carbon::parse($this->checkoutDate);
+
+        $daysDifference = $checkinDate->diffInDays($checkoutDate);
+
+
+
         if ($bookings->isNotEmpty()) {
             // Dates are not available, handle accordingly
             $this->dispatch('toast', message: "Selected dates are not available");
@@ -112,7 +120,7 @@ class BookingAndMembershipForm extends Component
             'checkin_date' => $this->checkinDate,
             'checkout_date' => $this->checkoutDate,
             'person_quantity' => $this->personQuantity,
-            'amount' => $this->accommodation->price,
+            'amount' => $this->accommodation->price * $daysDifference,
             'status' => BookingStatus::Pending,
         ]);
 

@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Enums\BookingStatus;
+use App\Models\Booking;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -61,6 +63,24 @@ class Chatbot extends Component
         switch ($intent) {
             case 'greet':
                 return 'Hi, just ask me if you have any question';
+            case 'ask_name':
+                return 'Hello, I\'m Starwell chatbot. How can I help you?';
+            case 'ask_accommodations':
+                return 'We have resort, restobar, gym, and barbershop.';
+            case 'ask_booking':
+                return 'Go to the accommodation page and select the accommodation you want to book.';
+            case 'ask_resort':
+                return 'The Starwell Resort includes two swimming pool, deluxe room, guest room with a living room. It also have function hall that can accommodate maximum of 150 person.';
+            case 'ask_gym':
+                return 'The Starwell Gym offers 1 month membership for only 1,500.00 pesos. It includes unlimited use of equipment in the gym, like leg press machine, seated curl machine, barbells, dumbells, and treadmill.';
+            case 'ask_restobar':
+                return 'The Starwell Restobar offers you the best feeling ever where you can book your table that includes our best promos and deals.';
+            case 'ask_barbershop':
+                return 'The Starwell Barbershop will give you the best service you ever wanted. We offer the best haircut, hair color, hair treatment and shave or trim to you to make you the best look as ever you want to be.';
+            case 'welcome':
+                return 'Thank you';
+            case 'thank_you':
+                return "You're welcome!";
             case 'ask_help':
                 return 'How can I help you?';
             case 'mode_of_payment':

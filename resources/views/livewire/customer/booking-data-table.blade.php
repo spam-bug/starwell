@@ -31,9 +31,10 @@
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Quantity</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Total Amount</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Check In / Booking Date</th>
+                <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Check Out Date</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Status</th>
                 @if($status === 'active')
-                    <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>    
+                    <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>
                 @endif
             </tr>
             </thead>
@@ -61,6 +62,14 @@
                                 {{ \Carbon\Carbon::parse($booking->checkin_date)->format('M d, Y h:i A') }}
                             @else
                                 {{ \Carbon\Carbon::parse($booking->booking_date)->format('M d, Y h:i A') }}
+                            @endif
+                        </td>
+
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap text-sm">
+                            @if($booking->accommodation->type === \App\Enums\AccommodationType::Resort)
+                                {{ \Carbon\Carbon::parse($booking->checkout_date)->format('M d, Y h:i A') }}
+                            @else
+
                             @endif
                         </td>
 
