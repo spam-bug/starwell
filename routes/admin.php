@@ -32,6 +32,7 @@ Route::prefix('accommodations')->group(function () {
 Route::prefix('products')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.products');
     Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('admin.products.create');
+    Route::get('/download', [\App\Http\Controllers\Admin\ProductController::class, 'download'])->name('admin.products.download');
     Route::get('/{product}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('admin.products.edit');
     Route::get('/inventory', [\App\Http\Controllers\ProductInventoryController::class, 'index'])->name('admin.products.inventories');
     Route::get('/inventory/create', [\App\Http\Controllers\ProductInventoryController::class, 'create'])->name('admin.products.inventories.create');
