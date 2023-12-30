@@ -51,3 +51,7 @@ Route::prefix('subscriptions')->group(function () {
     Route::get('/active', \App\Livewire\Admin\Subscriptions\ActiveDataTable::class)->name('admin.subscriptions.active');
     Route::get('/cancelled', \App\Livewire\Admin\Subscriptions\CancelledDataTable::class)->name('admin.subscriptions.cancelled');
 });
+
+Route::get('/test', function () {
+   return \App\Services\Sinch::send('Hello');
+});
