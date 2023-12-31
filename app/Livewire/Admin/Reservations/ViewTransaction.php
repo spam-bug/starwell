@@ -35,9 +35,9 @@ class ViewTransaction extends Component
         $booking->save();
 
         if ($booking->accommodation->type === AccommodationType::Barbershop || $booking->accommodation->type === AccommodationType::Restobar) {
-            $message = "You're booking for {$booking->accommodation->name} on " . Carbon::parse($booking->booking_date)->format('F d, Y') . " has been reserved." ;
+            $message = "Hi {$booking->client->name}, You're booking for {$booking->accommodation->name} on " . Carbon::parse($booking->booking_date)->format('F d, Y') . " for {$booking->person_quantity} person has been reserved. You're down payment is {$booking->downPayment()}." ;
         } else {
-            $message = "You're booking for {$booking->accommodation->name} from " . Carbon::parse($booking->checkin_date)->format('F d, Y') . " to " . Carbon::parse($booking->checkout_date)->format('F d, Y') . " has been reserved.";
+            $message = "Hi {$booking->client->name}, You're booking for {$booking->accommodation->name} from " . Carbon::parse($booking->checkin_date)->format('F d, Y') . " to " . Carbon::parse($booking->checkout_date)->format('F d, Y') . " for {$booking->person_quantity} person has been reserved. You're down payment is {$booking->downPayment()}.";
         }
 
         Sinch::send($message);
