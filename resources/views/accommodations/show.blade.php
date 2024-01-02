@@ -10,8 +10,11 @@
                     <x-badge variety="info">{{ $accommodation->type }}</x-badge>
                     <h1 class="text-4xl font-medium mt-2">{{ $accommodation->name }}</h1>
                     <p class="text-3xl font-bold text-blue-600 mt-2">{{ $accommodation->price() }}</p>
-                    @if($accommodation->type === \App\Enums\AccommodationType::Resort || $accommodation->type === \App\Enums\AccommodationType::Restobar)
+                    @if($accommodation->type === \App\Enums\AccommodationType::Resort)
                         <p class="text-gray-500 mt-4">{{ $accommodation->max_person }} Max Persons</p>
+                    @elseif($accommodation->type === \App\Enums\AccommodationType::Restobar)
+                        <p class="text-gray-500 mt-4">{{ $accommodation->max_person }} Max Persons</p>
+                        <p class="text-gray-500">{{ $accommodation->max_daily_capacity }} Daily Capacity</p>
                     @elseif($accommodation->type === \App\Enums\AccommodationType::Barbershop)
                         <p class="text-gray-500 mt-4">{{ $accommodation->max_daily_capacity }} Daily Capacity</p>
                     @else

@@ -5,7 +5,7 @@
             <div class="pb-4 border-b border-gray-300 border-dashed">
                 <div class="flex items-center justify-between">
                     <p class="font-medium">Service Type</p>
-                    <p>{{ $membership->accommodation->type }}</p>
+                    <p>{{ $membership->accommodation->type ?? 'Other' }}</p>
                 </div>
 
                 <div class="flex items-center justify-between">
@@ -57,12 +57,12 @@
             <div class="mt-8">
                 <div class="flex items-center justify-between border-b border-gray-300 border-dashed pb-2">
                     <p class="font-medium">Accommodation Price</p>
-                    <p>{{ $membership->accommodation->price() }}</p>
+                    <p>{{ $membership->accommodation ? $membership->accommodation->price() : 'N/A' }}</p>
                 </div>
 
                 <div class="flex items-center justify-between border-b border-gray-300 border-dashed mt-2 pb-2">
                     <p class="font-medium">Total Amount</p>
-                    <p>{{ $membership->accommodation->price() }}</p>
+                    <p>{{ $membership->accommodation ? $membership->accommodation->price() : 'N/A' }}</p>
                 </div>
             </div>
 

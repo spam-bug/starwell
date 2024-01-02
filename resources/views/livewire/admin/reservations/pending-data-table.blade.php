@@ -35,8 +35,8 @@
             @else
                 @foreach($reservations as $reservation)
                     <tr class="hover:bg-gray-50 cursor-pointer">
-                        <td class="p-4 text-left capitalize font-medium">{{ $reservation->accommodation->name }}</td>
-                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->accommodation->type }}</td>
+                        <td class="p-4 text-left capitalize font-medium">{{ $reservation->accommodation->name ?? 'Other' }}</td>
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->accommodation->type ?? 'N/A' }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
                             {{ $reservation->amount() }}
                         </td>
@@ -45,7 +45,7 @@
                             {{ $reservation->downPayment() }}
                         </td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            @if($reservation->accommodation->type === \App\Enums\AccommodationType::Resort)
+                            @if($reservation->checkin_date)
                                 {{ \Carbon\Carbon::parse($reservation->checkin_date)->format('M d, Y h:i A') }}
                             @else
                                 {{ \Carbon\Carbon::parse($reservation->booking_date)->format('M d, Y h:i A') }}

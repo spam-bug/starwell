@@ -34,10 +34,10 @@
             @else
                 @foreach($reservations as $reservation)
                     <tr class="hover:bg-gray-50 cursor-pointer" x-on:click="$dispatch('view-transaction', [{{ $reservation->id }}])">
-                        <td class="p-4 text-left capitalize font-medium">{{ $reservation->accommodation->name }}</td>
-                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->accommodation->type }}</td>
+                        <td class="p-4 text-left capitalize font-medium">{{ $reservation->accommodation->name ?? 'other' }}</td>
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->accommodation->type ?? 'N/A' }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            {{ $reservation->accommodation->price() }}
+                            {{ $reservation->accommodation ? $reservation->accommodation->price() : 'N/A' }}
                         </td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $reservation->person_quantity }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
