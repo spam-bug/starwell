@@ -40,11 +40,11 @@
                         <tr>
                             <td class="transaction_number">{{ strtoupper($transaction->id) }}</td>
                             @if($transaction->booking()->exists())
-                                <td>{{ $transaction->booking->accommodation->name }}</td>
-                                <td>{{ $transaction->booking->accommodation->type }}</td>
+                                <td>{{ $transaction->booking->accommodation->name ?? 'Other' }}</td>
+                                <td>{{ $transaction->booking->accommodation->type ?? 'N/A' }}</td>
                             @elseif($transaction->membership()->exists())
-                                <td>{{ $transaction->membership->accommodation->name }}</td>
-                                <td>{{ $transaction->membership->accommodation->type }}</td>
+                                <td>{{ $transaction->booking->accommodation->name ?? 'Other' }}</td>
+                                <td>{{ $transaction->booking->accommodation->type ?? 'N/A' }}</td>
                             @else
                                 <td></td>
                                 <td></td>

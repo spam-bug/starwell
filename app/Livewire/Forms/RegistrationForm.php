@@ -25,7 +25,7 @@ class RegistrationForm extends Form
     public string $address = '';
 
     #[Rule('required|ph_mobile_number')]
-    public string $contactNumber;
+    public string $contactNumber = '';
 
     public function store(): User
     {
