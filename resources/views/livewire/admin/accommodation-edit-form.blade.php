@@ -77,11 +77,17 @@
             <x-form.error for="form.price" />
         </x-form.group>
 
-        <x-form.group>
-            <x-form.label for="max-person" required>Max Person</x-form.label>
-            <x-form.input type="number" id="max-person" wire:model.blur="form.maxPerson" />
-            <x-form.error for="form.maxPerson" />
-        </x-form.group>
+        @if(\App\Enums\AccommodationType::from($form->accommodationType) !== \App\Enums\AccommodationType::Gym)
+            <x-form.group>
+                @if(\App\Enums\AccommodationType::from($form->accommodationType) === \App\Enums\AccommodationType::Barbershop)
+                    <x-form.label for="max" required>Max Daily Capacity</x-form.label>
+                @else
+                    <x-form.label for="max" required>Max Person</x-form.label>
+                @endif
+                <x-form.input type="number" id="max" wire:model.blur="form.max" />
+                <x-form.error for="form.max" />
+            </x-form.group>
+        @endif
 
         <div class="flex gap-2 justify-end">
             <x-button.link href="{{ route('admin.accommodations') }}" wire:navigate variety="secondary">Cancel</x-button.link>

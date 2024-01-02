@@ -88,8 +88,19 @@ class AccommodationForm extends Form
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->formattedPrice(),
-            'max_person' => $this->max,
         ];
+
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Resort || AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
+            $data['max_person'] = $this->max;
+        }
+
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
+            $data['max_daily_capacity'] = 5;
+        }
+
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Barbershop) {
+            $data['max_daily_capacity'] = $this->max;
+        }
 
         if ($this->photo instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
             $data['photo'] = $this->photo->store('photos');
@@ -109,8 +120,15 @@ class AccommodationForm extends Form
         $this->name = $accommodation->name;
         $this->description = $accommodation->description;
         $this->price = number_format(substr($accommodation->price, 0, -2) . '.' . substr($accommodation->price, -2), 2);
-        $this->max = $accommodation->max_person;
         $this->photo = $accommodation->photo;
+
+        if ($accommodation->type !== AccommodationType::Gym) {
+            if ($accommodation->type === AccommodationType::Barbershop) {
+                $this->max = $accommodation->max_daily_capacity;
+            } else {
+                $this->max = $accommodation->max_person;
+            }
+        }
     }
 
     private function formattedPrice(): int
