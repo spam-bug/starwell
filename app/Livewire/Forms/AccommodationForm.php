@@ -17,6 +17,7 @@ class AccommodationForm extends Form
     public string $description = '';
     public string $price = '';
     public int|string $max = '';
+    public int|string $capacity = '';
     public $photo;
 
     public function rules(): array
@@ -39,6 +40,10 @@ class AccommodationForm extends Form
 
         if (AccommodationType::from($this->accommodationType) !== AccommodationType::Gym) {
             $rules['max'] =  ['required','integer','min:1'];
+        }
+
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
+            $rules['capacity'] =  ['required','integer','min:1'];
         }
 
         if ($this->photo instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
@@ -69,7 +74,7 @@ class AccommodationForm extends Form
         }
 
         if (AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
-            $data['max_daily_capacity'] = 5;
+            $data['max_daily_capacity'] = $this->capacity;
         }
 
         if (AccommodationType::from($this->accommodationType) === AccommodationType::Barbershop) {
@@ -95,7 +100,7 @@ class AccommodationForm extends Form
         }
 
         if (AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
-            $data['max_daily_capacity'] = 5;
+            $data['max_daily_capacity'] = $this->capacity;
         }
 
         if (AccommodationType::from($this->accommodationType) === AccommodationType::Barbershop) {
@@ -128,6 +133,10 @@ class AccommodationForm extends Form
             } else {
                 $this->max = $accommodation->max_person;
             }
+        }
+
+        if ($accommodation->type === AccommodationType::Restobar) {
+            $this->capacity = $accommodation->max_daily_capacity;
         }
     }
 

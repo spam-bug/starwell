@@ -89,6 +89,14 @@
             </x-form.group>
         @endif
 
+        @if(\App\Enums\AccommodationType::from($form->accommodationType) === \App\Enums\AccommodationType::Restobar)
+            <x-form.group>
+                <x-form.label for="capacity" required>Max Daily Capacity</x-form.label>
+                <x-form.input type="number" id="max" wire:model.blur="form.capacity" />
+                <x-form.error for="form.max" />
+            </x-form.group>
+        @endif
+
         <div class="flex gap-2 justify-end">
             <x-button.link href="{{ route('admin.accommodations') }}" wire:navigate variety="secondary">Cancel</x-button.link>
             <x-button variety="primary" wire:loading.attr="disabled" wire:target="save">
