@@ -130,11 +130,11 @@ class BookingAndMembershipForm extends Component
 
     private function bookRestobar(): void
     {
-        $existingBooking = $this->accommodation->bookings()->where('booking_date', $this->bookingDate)->first();
+        $existingBooking = $this->accommodation->bookings()->whereDate('booking_date','=', \Carbon\Carbon::parse($this->bookingDate)->toDateString())->count();
 
-        if ($existingBooking) {
+        if ($existingBooking >= 5) {
             // Date is not available, handle accordingly
-            $this->dispatch('toast', message: "Selected date is not available for Restobar");
+            $this->dispatch('toast', message: "This date is already full");
             return;
         }
 

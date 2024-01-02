@@ -68,6 +68,10 @@ class AccommodationForm extends Form
             $data['max_person'] = $this->max;
         }
 
+        if (AccommodationType::from($this->accommodationType) === AccommodationType::Restobar) {
+            $data['max_daily_capacity'] = 5;
+        }
+
         if (AccommodationType::from($this->accommodationType) === AccommodationType::Barbershop) {
             $data['max_daily_capacity'] = $this->max;
         }
