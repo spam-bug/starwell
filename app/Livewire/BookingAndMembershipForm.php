@@ -172,5 +172,8 @@ class BookingAndMembershipForm extends Component
             'amount' => $this->accommodation->price *  $this->personQuantity,
             'status' => BookingStatus::Pending,
         ]);
+
+        event(new Booking($booking));
+        $this->dispatch('toast', message: "Booking successful for Barbershop");
     }
 }
