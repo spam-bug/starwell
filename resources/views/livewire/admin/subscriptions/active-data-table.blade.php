@@ -33,8 +33,8 @@
             @else
                 @foreach($subscriptions as $subscription)
                     <tr class="hover:bg-gray-50 cursor-pointer" x-on:click="$dispatch('view-transaction', [{{ $subscription->id }}])">
-                        <td class="p-4 text-left capitalize font-medium">{{ $subscription->accommodation->name }}</td>
-                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $subscription->accommodation->type }}</td>
+                        <td class="p-4 text-left capitalize font-medium">{{ $subscription->accommodation->name ?? 'Other' }}</td>
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $subscription->accommodation->type ?? 'N/A' }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ \Carbon\Carbon::parse($subscription->start_date )->format('M d, Y') }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ \Carbon\Carbon::parse($subscription->end_date )->format('M d, Y') }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
