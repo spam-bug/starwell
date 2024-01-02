@@ -37,6 +37,10 @@ class Accommodation extends Model
 
     public function price(): string
     {
+        if (! $this->price) {
+            return 'N/A';
+        }
+
         return "₱" . number_format(substr($this->price, 0, -2) . '.' . substr($this->price, -2), 2);
     }
 }

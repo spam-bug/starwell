@@ -22,7 +22,7 @@
             <tr class="bg-gray-100 border-b border-gray-300">
                 <th class="text-left text-sm font-medium px-4 py-2">Name</th>
                 <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Service Type</th>
-                
+
                 @if($status !== 'ongoing')
                     <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Price</th>
                 @endif
@@ -39,7 +39,7 @@
                 @endif
 
                 @if($status !== 'cancelled')
-                    <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>    
+                    <th class="hidden sm:table-cell text-left text-sm font-medium px-4 py-2">Action</th>
                 @endif
             </tr>
             </thead>
@@ -52,12 +52,12 @@
             @else
                 @foreach($subscriptions as $subscription)
                     <tr class="hover:bg-gray-50 cursor-pointer">
-                        <td class="p-4 text-left capitalize font-medium">{{ $subscription->accommodation->name }}</td>
-                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $subscription->accommodation->type }}</td>
+                        <td class="p-4 text-left capitalize font-medium">{{ $subscription->accommodation->name ?? 'Other' }}</td>
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $subscription->accommodation->type ?? 'N/A' }}</td>
 
                         @if($status !== 'ongoing')
                             <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                                {{ $subscription->accommodation->price() }}
+                                {{ $subscription->accommodation ? $subscription->accommodation->price() : 'N/A' }}
                             </td>
                         @endif
 

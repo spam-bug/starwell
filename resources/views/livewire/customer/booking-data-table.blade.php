@@ -47,10 +47,10 @@
             @else
                 @foreach($bookings as $booking)
                     <tr class="hover:bg-gray-50 cursor-pointer">
-                        <td class="p-4 text-left capitalize font-medium">{{ $booking->accommodation->name }}</td>
-                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $booking->accommodation->type }}</td>
+                        <td class="p-4 text-left capitalize font-medium">{{ $booking->accommodation->name ?? 'other' }}</td>
+                        <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $booking->accommodation->type ?? 'N/A' }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
-                            {{ $booking->accommodation->price() }}
+                            {{ $booking->accommodation ? $booking->accommodation->price() : 'N/A' }}
                         </td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">{{ $booking->person_quantity }}</td>
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap">
@@ -58,7 +58,7 @@
                         </td>
 
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap text-sm">
-                            @if($booking->accommodation->type === \App\Enums\AccommodationType::Resort)
+                            @if($booking->checkin_date)
                                 {{ \Carbon\Carbon::parse($booking->checkin_date)->format('M d, Y h:i A') }}
                             @else
                                 {{ \Carbon\Carbon::parse($booking->booking_date)->format('M d, Y h:i A') }}
@@ -66,7 +66,7 @@
                         </td>
 
                         <td class="hidden sm:table-cell p-4 text-left text-gray-700 whitespace-nowrap text-sm">
-                            @if($booking->accommodation->type === \App\Enums\AccommodationType::Resort)
+                            @if($booking->checkout_date)
                                 {{ \Carbon\Carbon::parse($booking->checkout_date)->format('M d, Y h:i A') }}
                             @else
 
@@ -78,6 +78,7 @@
                                 {{ str_replace('_', ' ', $booking->status->value) }}
                             </span>
                         </td>
+
                         @if($status === 'active')
                             <td class="p-4">
                                 @if($booking->status !== App\Enums\BookingStatus::Confirmed)

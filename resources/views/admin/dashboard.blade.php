@@ -40,7 +40,7 @@
                     @else
                         @foreach($bookings as $booking)
                             <tr class="hover:bg-gray-50 cursor-pointer">
-                                <td class="p-4 text-left capitalize font-medium">{{ $booking->accommodation->name }}</td>
+                                <td class="p-4 text-left capitalize font-medium">{{ $booking->accommodation->name ?? 'other' }}</td>
                                 <td class="hidden sm:table-cell p-4 text-left text-gray-700">
                                     @if($booking->checkin_date)
                                         {{ \Carbon\Carbon::parse($booking->checkin_date)->format('M d, Y h:i A') }}
@@ -75,7 +75,7 @@
                 @else
                     @foreach($memberships as $membership)
                         <tr class="hover:bg-gray-50 cursor-pointer">
-                            <td class="p-4 text-left capitalize font-medium text-sm">{{ $membership->accommodation->name }}</td>
+                            <td class="p-4 text-left capitalize font-medium text-sm">{{ $membership->accommodation->name ?? 'Other' }}</td>
                             <td class="hidden sm:table-cell p-4 text-left text-gray-700 text-xs">
                                 {{ \Carbon\Carbon::parse($membership->start_date)->format('M d, Y h:i A') }}
                             </td>
@@ -83,7 +83,7 @@
                             <td class="hidden sm:table-cell p-4 text-left text-gray-700 text-xs">
                                 {{ \Carbon\Carbon::parse($membership->end)->format('M d, Y h:i A') }}
                             </td>
-                            <td class="p-4 text-left text-gray-700">{{ $membership->accommodation->price() }}</td>
+                            <td class="p-4 text-left text-gray-700">{{ $membership->accommodation ? $membership->accommodation->price() : 'N/A' }}</td>
                         </tr>
                     @endforeach
                 @endif
