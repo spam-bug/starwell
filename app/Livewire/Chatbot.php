@@ -12,8 +12,9 @@ class Chatbot extends Component
 {
     public array $messages = [];
 
-    #[Rule('required')]
     public string $message = '';
+
+    public string $select = '';
 
     public function mount()
     {
@@ -25,9 +26,14 @@ class Chatbot extends Component
         }
     }
 
+    public function updatedSelect()
+    {
+        $this->message = $this->select;
+        $this->sendMessage();
+    }
+
     public function sendMessage()
     {
-        $this->validate();
         $message = $this->message;
         $this->message = '';
         $this->messages[] = ['type' => 'user', 'content' => $message];
