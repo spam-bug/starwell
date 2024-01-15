@@ -16,7 +16,10 @@ class ProductInventoryCreateForm extends Component
     public function mount()
     {
         $this->products = Product::where('available', '!=', 0)->get();
-        $this->form->product = $this->products->first()->id;
+
+        if ($this->products->isNotEmpty()) {
+            $this->form->product = $this->products->first()->id;
+        }
     }
 
     public function save(): void

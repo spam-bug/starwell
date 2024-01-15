@@ -56,16 +56,27 @@ class InventoryForm extends Form
         ]);
 
         $this->inventory->return_quantity = $this->return_quantity;
-        $this->inventory->damage_quantity = $this->damage_quantity;
+        $this->inventory->rented_quantity -= $this->return_quantity;
+        
+        if(! empty($this->damage_quantity)) {
+            $this->inventory->damage_quantity = $this->damage_quantity;
+        }
+
         $this->inventory->status = 'return';
 
         $this->inventory->save();
 
         $product = $this->inventory->product;
 
-        $product->update([
-            'available' => $product->available + ($this->return_quantity - $this->damage_quantity),
-            'damage' => $this->damage_quantity,
-        ]);
+        $deduction = !empty($this->damage_quantity) ? $this->return_quantity - $this->damage_quantity : $this->return_quantity;
+
+
+
+        if (!empty($this->damage_quantity)) {
+            $product->damage = $this->damage_quantity;
+        }
+
+        $product->available = $product->available + $deduction;
+        $product->save();
     }
 }
