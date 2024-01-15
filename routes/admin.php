@@ -29,7 +29,7 @@ Route::prefix('accommodations')->group(function () {
     Route::get('/{accommodation}/edit', [AccommodationController::class, 'edit'])->name('admin.accommodations.edit');
 });
 
-Route::prefix('products')->group(function () {
+Route::prefix('equipments')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.products');
     Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('admin.products.create');
     Route::get('/download', [\App\Http\Controllers\Admin\ProductController::class, 'download'])->name('admin.products.download');
