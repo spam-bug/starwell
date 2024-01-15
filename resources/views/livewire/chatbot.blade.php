@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <form class="flex gap-1 overflow-auto px-4 py-2">
+                <form class="flex gap-1 overflow-auto px-4 py-2" wire:loading.remove>
                     <label for="address" class="inline-block cursor-pointer whitespace-nowrap rounded-full border border-black px-2 py-1 text-sm">
                         <input
                             id="address"
