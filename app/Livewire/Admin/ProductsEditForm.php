@@ -24,7 +24,7 @@ class ProductsEditForm extends Component
     {
         $this->form->update();
 
-        $this->dispatch('toast', message: 'Product has been updated.');
+        $this->dispatch('toast', message: 'Equipment has been updated.');
 
         $this->redirect(route('admin.products'), true);
     }

@@ -13,7 +13,7 @@ class ProductsCreateForm extends Component
     {
         $this->form->store();
 
-        $this->dispatch('toast', message: 'Products has been created.');
+        $this->dispatch('toast', message: 'Equipment has been created.');
 
         $this->redirect(route('admin.products'), true);
     }

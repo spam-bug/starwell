@@ -28,7 +28,7 @@ class ProductDelete extends Component
 
         $this->product->delete();
 
-        $this->dispatch('toast', message: 'Product has been deleted.');
+        $this->dispatch('toast', message: 'Equipment has been deleted.');
 
         $this->redirect(route('admin.products'), true);
     }

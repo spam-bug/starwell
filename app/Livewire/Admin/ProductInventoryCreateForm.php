@@ -23,7 +23,7 @@ class ProductInventoryCreateForm extends Component
     {
         $this->form->store();
 
-        $this->dispatch('toast', message: 'Product has been created.');
+        $this->dispatch('toast', message: 'Equipment has been created.');
 
         $this->redirect(route('admin.products.inventories'), true);
     }
