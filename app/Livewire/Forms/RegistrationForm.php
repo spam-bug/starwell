@@ -27,6 +27,9 @@ class RegistrationForm extends Form
     #[Rule('required|ph_mobile_number')]
     public string $contactNumber = '';
 
+    #[Rule('required|accepted')]
+    public bool $terms = false;
+
     public function store(): User
     {
         $data = $this->validate();

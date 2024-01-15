@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/terms', function () {
+    return view('terms');
+});
 
 Route::prefix('accommodations')->group(function () {
     Route::get('/', [AccommodationController::class, 'index'])->name('accommodations');
@@ -29,7 +32,7 @@ Route::get('/gallery', function () {
     return view('gallery');
 })->name('gallery');
 
-Route::post('/logout', LogOutController::class)->name('logout');
+Route::post('/logout', LogOutController::class)->name('logout')->middleware('auth');
 
 Route::middleware(['auth', 'customer'])->prefix('{user:username}')->group(function () {
     Route::get('/bookings', BookingController::class)->name('bookings');
