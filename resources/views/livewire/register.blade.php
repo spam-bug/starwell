@@ -1,6 +1,6 @@
 <div>
     <button wire:click="$dispatch('open-dialog', '{{ $identifier }}')"
-        class="block w-full whitespace-nowrap px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+        class="block w-full whitespace-nowrap px-4 py-2.5 text-left text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:text-center lg:hover:bg-transparent"
     >REGISTER</button>
 
     <x-dialog title="Register" :$identifier>

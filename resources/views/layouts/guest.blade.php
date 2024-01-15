@@ -1,66 +1,107 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }} | {{ config('app.name') }}</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
+
 <body
-    class="min-h-screen font-sans antialiased bg-gray-100"
+    class="min-h-screen bg-gray-100 font-sans antialiased"
     x-data="{ expanded: window.innerWidth > 992 }"
     x-on:resize.window="expanded = window.innerWidth > 992"
 >
     <x-toasts />
 
-    <header class="bg-gray-900 relative">
-        <div class="w-full max-w-7xl p-4 sm:px-6 lg:px-8 mx-auto">
+    <header class="relative bg-gray-900">
+        <div class="mx-auto w-full max-w-7xl p-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between">
-                <div class="w-full flex items-center gap-8">
-                    <a href="#" class="font-bold text-2xl text-white">STARWELL</a>
+                <div class="flex w-full items-center gap-8">
+                    <a href="#" class="text-2xl font-bold text-white">STARWELL</a>
 
                     <div
                         x-show="expanded"
                         x-collapse
                         x-cloak
-                        class="w-full absolute top-full inset-x-0 bg-gray-900 lg:static lg:flex lg:justify-between lg:items-center"
+                        class="absolute inset-x-0 top-full w-full bg-gray-900 lg:static lg:flex lg:items-center lg:justify-between"
                     >
                         <div class="lg:flex lg:items-center lg:gap-8">
-                            <a href="{{ route('home') }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">HOME</a>
-                            <a href="{{ route('accommodations') }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">ACCOMMODATIONS</a>
+                            <a
+                                href="{{ route('home') }}"
+                                wire:navigate
+                                class="block w-full px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                            >HOME</a>
+                            <a
+                                href="{{ route('accommodations') }}"
+                                wire:navigate
+                                class="block w-full px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                            >ACCOMMODATIONS</a>
 
-                            @if(auth()->check() && auth()->user()->isCustomer())
-                                <a href="{{ route('bookings', auth()->user()) }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">BOOKINGS</a>
-                                <a href="{{ route('subscriptions', auth()->user()) }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">SUBSCRIPTIONS</a>
+                            @if (auth()->check() &&
+                                    auth()->user()->isCustomer())
+                                <a
+                                    href="{{ route('bookings', auth()->user()) }}"
+                                    wire:navigate
+                                    class="block w-full px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                                >BOOKINGS</a>
+                                <a
+                                    href="{{ route('subscriptions', auth()->user()) }}"
+                                    wire:navigate
+                                    class="block w-full px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                                >SUBSCRIPTIONS</a>
                             @endif
 
-                            <a href="{{ route('gallery') }}" wire:navigate class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">GALLERY</a>
-{{--                            <a class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">ABOUT</a>--}}
+                            <a
+                                href="{{ route('gallery') }}"
+                                wire:navigate
+                                class="block w-full px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                            >GALLERY</a>
+                            {{--                            <a class="w-full block text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">ABOUT</a> --}}
                         </div>
 
                         @guest
                             <div class="lg:flex lg:items-center lg:gap-4">
                                 <livewire:login />
-                                <span class="hidden lg:inline-block text-white">|</span>
+                                <span class="hidden text-white lg:inline-block">|</span>
                                 <livewire:register />
                             </div>
                         @endguest
 
-                        @if(auth()->check() && auth()->user()->isCustomer())
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
+                        @auth
+                            <div class="lg:flex lg:items-center lg:gap-4">
+                                @if (auth()->user()->isStaff() ||
+                                        auth()->user()->isAdmin())
+                                    <a
+                                        href="{{ route('admin.dashboard') }}"
+                                        wire:navigate
+                                        class="block w-full px-4 py-2.5 text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                                    >DASHBOARD</a>
+                                @endif
 
-                                <button class="w-full block text-left text-white text-sm px-4 py-2.5 hover:bg-gray-800 lg:hover:bg-transparent lg:p-0 lg:inline-block">
-                                    LOG OUT
-                                </button>
-                            </form>
-                        @endif
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+
+                                    <button
+                                        class="block w-full px-4 py-2.5 text-left text-sm text-white hover:bg-gray-800 lg:inline-block lg:p-0 lg:hover:bg-transparent"
+                                    >
+                                        LOG OUT
+                                    </button>
+                                </form>
+                            </div>
+                        @endauth
                     </div>
                 </div>
 
@@ -82,4 +123,5 @@
     <livewire:chatbot />
     @livewireScripts
 </body>
+
 </html>
