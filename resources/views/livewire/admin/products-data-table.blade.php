@@ -45,7 +45,7 @@
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">{{ $product->quantity }} </td>
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">{{ $product->available }} </td>
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">
-                            {{ $product->inventories()->latest()->first()->rented_quantity }}
+                            {{ $product->rentedQuantity() }}
                         </td>
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">{{ $product->damage ?? 0 }} </td>
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">{{ $product->totalCost() }} </td>

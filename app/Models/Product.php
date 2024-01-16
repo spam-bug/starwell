@@ -33,4 +33,13 @@ class Product extends Model
 
         return "₱" . number_format(substr($total, 0, -2) . '.' . substr($total, -2), 2);
     }
+
+    public function rentedQuantity(): int
+    {
+        if ($this->inventories()->count()) {
+            return $this->inventories()->latest()->first()->rented_quantity;
+        }
+
+        return 0;
+    }
 }
