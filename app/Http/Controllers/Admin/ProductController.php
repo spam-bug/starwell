@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\TransactionStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductInventory;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -15,7 +16,9 @@ class ProductController extends Controller
 {
     public function index(): View
     {
-        return view('admin.products.index');
+        return view('admin.products.index', [
+            'products' => Product::all(),
+        ]);
     }
 
     public function create(): View
@@ -42,7 +45,7 @@ class ProductController extends Controller
         }
 
         // Adjust the query based on the selected range
-        $query = Product::query();
+        $query = ProductInventory::query();
 
         switch ($range) {
             case 'weekly':
@@ -66,14 +69,16 @@ class ProductController extends Controller
                 return response()->json(['error' => 'Invalid range provided.'], 422);
         }
 
-        $products = $query->get();
+        $inventories = $query->when($request->input('product') != 'all', function ($query) {
+            $query->where();
+        })->get();
 
         $data = [
             'range' => [$range],
-            'products' => $products,
-            'total' => [
-                'price' => $products->sum('price') * $products->sum('quantity'),
-            ]
+            'inventories' => $inventories,
+            // 'total' => [
+            //     'price' => $products->sum('price') * $products->sum('quantity'),
+            // ]
         ];
 
         if ($range === 'custom') {

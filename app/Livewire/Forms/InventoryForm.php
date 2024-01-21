@@ -56,7 +56,6 @@ class InventoryForm extends Form
         ]);
 
         $this->inventory->return_quantity = $this->return_quantity;
-        $this->inventory->rented_quantity -= $this->return_quantity;
         
         if(! empty($this->damage_quantity)) {
             $this->inventory->damage_quantity = $this->damage_quantity;

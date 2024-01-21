@@ -25,6 +25,18 @@
         @csrf
 
         <div class="flex items-center gap-2">
+            <x-form.label>Product</x-form.label>
+            <x-form.select class="max-w-[150px]" name="product">
+                <option value="all">All</option>
+                @if ($products->isNotEmpty())
+                    @foreach ($products as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endforeach
+                @endif
+            </x-form.select>
+        </div>
+
+        <div class="flex items-center gap-2">
             <x-form.label>Range</x-form.label>
             <x-form.select
                 class="max-w-[150px]"
