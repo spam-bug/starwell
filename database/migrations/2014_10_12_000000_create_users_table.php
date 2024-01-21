@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('account_type');
             $table->string('contact_number')->nullable();
             $table->string('address')->nullable();
+            $table->date('birthday')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

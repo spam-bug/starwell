@@ -72,6 +72,16 @@
             </x-form.group>
 
             <x-form.group>
+                <x-form.label for="birthday" required>Birthday</x-form.label>
+                <x-form.input
+                    id="birthday"
+                    type="date"
+                    wire:model="form.birthday"
+                />
+                <x-form.error for="form.contactNumber" />
+            </x-form.group>
+
+            <x-form.group>
                 <label for="terms" class="block">
                     <input
                         id="terms"

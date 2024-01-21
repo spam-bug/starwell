@@ -4,15 +4,17 @@ namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\MembershipStatus;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -24,6 +26,7 @@ class User extends Authenticatable
         'account_type',
         'contact_number',
         'address',
+        'birthday'
     ];
 
     protected $hidden = [
@@ -78,5 +81,10 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->account_type === 'admin';
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmail);
     }
 }
