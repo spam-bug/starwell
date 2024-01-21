@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\AccommodationType;
 use App\Enums\TransactionStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
@@ -55,7 +56,20 @@ class TransactionController extends Controller
                 return response()->json(['error' => 'Invalid range provided.'], 422);
         }
 
-        $transactions = $query->get();
+        $transactions = $query->when($request->input('accommodation') != 'all', function ($query) use ($request) {
+            $query->whereHas('booking', function ($query) use ($request) {
+                $query->whereHas('accommodation', function ($query) use ($request) {
+                    $query->where('type', AccommodationType::tryFrom($request->input('accommodation')));
+                });
+            });
+        })
+        ->when($request->input('type') == 'reservation', function ($query) {
+            $query->where('membership_id', NULL);
+        })
+        ->when($request->input('type') == 'subscription', function ($query) {
+            $query->where('booking_id', NULL);
+        })
+        ->get();
 
         $data = [
             'range' => [$range],
