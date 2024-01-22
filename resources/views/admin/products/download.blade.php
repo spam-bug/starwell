@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <h1>STARWELL BATAAN PRIVATE RESORT</h1>
+        <h1>STARWELL BATAAN</h1>
         <p>Purok 6, Kawayan Kiling, Cataning, Hermosa, Bataan</p>
         <p>(+63) 939 - 924 - 2023</p>
 
@@ -28,6 +28,7 @@
             <thead>
                 <tr>
                     <th>Date</th>
+                    <th>Business</th>
                     <th>Equipment</th>
                     <th>Unit Price</th>
                     <th>Rented Quantity</th>
@@ -45,6 +46,7 @@
                     @foreach ($inventories as $inventory)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($inventory->created_at)->format('M d, Y') }}</td>
+                            <td>{{ $inventory->product->business }}</td>
                             <td class="transaction_number">{{ $inventory->product->name }}</td>
                             <td>{{ str_replace('₱', '', $inventory->product->unitPrice()) }}</td>
                             <td>{{ $inventory->rented_quantity }}</td>
