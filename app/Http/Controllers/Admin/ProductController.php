@@ -69,16 +69,21 @@ class ProductController extends Controller
                 return response()->json(['error' => 'Invalid range provided.'], 422);
         }
 
-        $inventories = $query->when($request->input('product') != 'all', function ($query) {
-            $query->where();
-        })->get();
+        $inventories = $query->when($request->input('product') != 'all', function ($query) use($request) {
+            $query->whereHas('product', function($query) use ($request) {
+                $query->where('id', $request->input('product'));
+            });
+        })
+        ->when($request->input('business') != 'all', function ($query) use($request) {
+            $query->whereHas('product', function ($query) use($request) {
+                $query->where('business', $request->input('business'));
+            });
+        })
+        ->get();
 
         $data = [
             'range' => [$range],
             'inventories' => $inventories,
-            // 'total' => [
-            //     'price' => $products->sum('price') * $products->sum('quantity'),
-            // ]
         ];
 
         if ($range === 'custom') {

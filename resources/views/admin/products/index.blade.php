@@ -25,6 +25,16 @@
         @csrf
 
         <div class="flex items-center gap-2">
+            <x-form.label>Business</x-form.label>
+            <x-form.select class="max-w-[150px]" name="business">
+                <option value="all">All</option>
+                @foreach (\App\Enums\AccommodationType::cases() as $case)
+                    <option value="{{ $case->value }}">{{ $case->name }}</option>
+                @endforeach
+            </x-form.select>
+        </div>
+
+        <div class="flex items-center gap-2">
             <x-form.label>Product</x-form.label>
             <x-form.select class="max-w-[150px]" name="product">
                 <option value="all">All</option>

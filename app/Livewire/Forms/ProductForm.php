@@ -10,6 +10,7 @@ class ProductForm extends Form
 {
     public ?Product $product = null;
 
+    public $business = '';
     public $name = '';
     public $price = '';
     public $quantity = '';
@@ -17,6 +18,7 @@ class ProductForm extends Form
     public function rules()
     {
         return [
+            'business' => ['required'],
             'name' => ['required', 'alpha_spaces'],
             'price' => ['required', 'currency'],
             'quantity' => ['required', 'min:1'],
@@ -37,6 +39,7 @@ class ProductForm extends Form
     {
         $this->product = $product;
 
+        $this->business = $product->business;
         $this->name = $product->name;
         $this->price = number_format(substr($product->price, 0, -2) . '.' . substr($product->price, -2), 2);
         $this->quantity = $product->quantity;

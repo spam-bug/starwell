@@ -21,6 +21,7 @@
     <table class="w-full">
         <thead>
             <tr class="border-y border-gray-300 bg-gray-100">
+                <th class="px-4 py-2 text-left text-sm font-medium">Business</th>
                 <th class="px-4 py-2 text-left text-sm font-medium">Name</th>
                 <th class="hidden px-4 py-2 text-left text-sm font-medium sm:table-cell">Unit Cost</th>
                 <th class="hidden px-4 py-2 text-left text-sm font-medium sm:table-cell">Quantity</th>
@@ -40,6 +41,7 @@
             @else
                 @foreach ($products as $product)
                     <tr class="cursor-pointer hover:bg-gray-50">
+                        <td class="p-4 text-left font-medium capitalize">{{ $product->business }}</td>
                         <td class="p-4 text-left font-medium capitalize">{{ $product->name }}</td>
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">{{ $product->unitPrice() }}</td>
                         <td class="hidden whitespace-nowrap p-4 text-left text-gray-700 sm:table-cell">{{ $product->quantity }} </td>

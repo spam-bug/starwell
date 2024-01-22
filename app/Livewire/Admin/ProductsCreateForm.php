@@ -2,12 +2,18 @@
 
 namespace App\Livewire\Admin;
 
+use App\Enums\AccommodationType;
 use App\Livewire\Forms\ProductForm;
 use Livewire\Component;
 
 class ProductsCreateForm extends Component
 {
     public ProductForm $form;
+
+    public function mount()
+    {
+        $this->form->business = AccommodationType::Resort->value;
+    }
 
     public function save()
     {
