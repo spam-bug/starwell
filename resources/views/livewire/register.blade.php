@@ -78,7 +78,7 @@
                     type="date"
                     wire:model="form.birthday"
                 />
-                <x-form.error for="form.contactNumber" />
+                <x-form.error for="form.birthday" />
             </x-form.group>
 
             <x-form.group>

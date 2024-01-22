@@ -27,7 +27,7 @@ class RegistrationForm extends Form
     #[Rule('required|ph_mobile_number')]
     public string $contactNumber = '';
 
-    #[Rule('required|date_format:Y-m-d|after:18 years ago')]
+    #[Rule('required|date_format:Y-m-d|before:18 years ago')]
     public $birthday = '';
 
     #[Rule('required|accepted')]
