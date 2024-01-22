@@ -1,21 +1,22 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Transaction Report</title>
 
     <link rel="stylesheet" href="{{ asset('pdf.css') }}">
 </head>
+
 <body>
     <header>
-        <h1>STARWELL BATAAN PRIVATE RESORT</h1>
+        <h1>STARWELL BATAAN</h1>
         <p>Purok 6, Kawayan Kiling, Cataning, Hermosa, Bataan</p>
         <p>(+63) 939 - 924 - 2023</p>
 
-        @if ($range[0]  !== 'custom')
+        @if ($range[0] !== 'custom')
             <h2>{{ ucfirst($range[0]) }} Transaction Report</h2>
         @else
             <h2>{{ $range[1]['from'] }} - {{ $range[1]['to'] }} Transaction Report</h2>
@@ -35,11 +36,11 @@
                 </tr>
             </thead>
             <tbody>
-                @if($transactions->isNotEmpty())
-                    @foreach($transactions as $transaction)
+                @if ($transactions->isNotEmpty())
+                    @foreach ($transactions as $transaction)
                         <tr>
                             <td class="transaction_number">{{ strtoupper($transaction->id) }}</td>
-                            @if($transaction->booking()->exists())
+                            @if ($transaction->booking()->exists())
                                 <td>{{ $transaction->booking->accommodation->name ?? 'Other' }}</td>
                                 <td>{{ $transaction->booking->accommodation->type ?? 'N/A' }}</td>
                             @elseif($transaction->membership()->exists())
@@ -69,4 +70,5 @@
         </table>
     </main>
 </body>
+
 </html>
